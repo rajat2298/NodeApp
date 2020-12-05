@@ -1,7 +1,7 @@
 pipeline { 
     environment { 
-        registry = "priyapam/nodeapp" 
-        registryCredential = 'dockerhub_id' 
+        registry = "rajat2298/nodeapp" 
+        registryCredential = '7838569003' 
         dockerImage = '' 
     }
     agent any 
