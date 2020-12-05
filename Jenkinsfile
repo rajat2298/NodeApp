@@ -1,33 +1,36 @@
-node {
-    def app
-
-    stage('Clone repository') {
-        /* Cloning the Repository to our Workspace */
-
-        checkout scm
+pipeline { 
+    environment { 
+        registry = "priyapam/nodeapp" 
+        registryCredential = 'dockerhub_id' 
+        dockerImage = '' 
     }
-
-    stage('Build image') {
-        /* This builds the actual image */
-
-        app = docker.build("anandr72/nodeapp")
-    }
-
-    stage('Test image') {
-        
-        app.inside {
-            echo "Tests passed"
-        }
-    }
-
-    stage('Push image') {
-        /* 
-			You would need to first register with DockerHub before you can push images to your account
-		*/
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+    agent any 
+    stages { 
+	stage('Cloning our Git') { 
+            steps { 
+                checkout scm 
+            }
+        } 
+        stage('Building our image') { 
+            steps { 
+                script { 
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+                }
             } 
-                echo "Trying to Push Docker Build to DockerHub"
+        }
+        stage('Deploy our image') { 
+            steps { 
+                script { 
+                    docker.withRegistry( '', registryCredential ) { 
+                    dockerImage.push() 
+                    }
+                } 
+            }
+        } 
+        stage('Cleaning up') { 
+            steps { 
+                sh "docker rmi $registry:$BUILD_NUMBER" 
+            }
+        } 
     }
 }
