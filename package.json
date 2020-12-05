@@ -1,5 +1,5 @@
 {
-    "name": "priyapadm-nodeapp",
+    "name": "rajat2298-nodeapp",
     "version": "1.0.0",
     "description": "A Hello World HTTP server using Node JS",
     "main": "main.js",
@@ -9,14 +9,14 @@
     },
     "repository": {
       "type": "git",
-      "url": "https://github.com/priyapadm/NodeApp"
+      "url": "https://github.com/rajat2298/NodeApp"
     },
     "keywords": [
       "node",
       "docker",
       "dockerfile"
     ],
-    "author": "priyapadm@gmail.com",
+    "author": "mittal.rajat04@gmail.com",
     "license": "ISC",
     "devDependencies": { "test": ">=0.6.0" }
   }
